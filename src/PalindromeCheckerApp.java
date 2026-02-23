@@ -1,41 +1,62 @@
-import java.util.Scanner;
+import java.util.Stack;
 
- class UseCase4PalindromeCheckerApp {
+public class PalindromeCheckerApp {
 
-    public static void main(String[] args) {
+    static boolean palindrome(String word) {
 
-        Scanner scanner = new Scanner(System.in);
+        StringBuilder rev_word = new StringBuilder();
 
-        // Declare and initialize the input string.
-        System.out.print("Enter a string: ");
-        String input = scanner.nextLine();
+        for (int i = word.length() - 1; i >= 0; i--) {
+            rev_word.append(word.charAt(i));
+        }
 
-        // Convert the string into a character array.
-        char[] chars = input.toLowerCase().replaceAll("\\s+", "").toCharArray();
+        return word.equals(rev_word.toString());
+    }
 
-        // Initialize pointer at the beginning.
+    static boolean palindromeArr(String word) {
+
         int start = 0;
+        int end = word.length() - 1;
 
-        // Initialize pointer at the end.
-        int end = chars.length - 1;
-
-        // Assume palindrome initially.
-        boolean isPalindrome = true;
-
-        // Continue comparison until pointers cross.
-        while (start < end) {
-            if (chars[start] != chars[end]) {
-                isPalindrome = false;
-                break;
+        while (end >= start) {
+            if (word.charAt(start) != word.charAt(end)) {
+                return false;
             }
             start++;
             end--;
         }
+        return true;
+    }
 
-        // Output result
-        System.out.println("Input : " + input);
-        System.out.println("Is Palindrome? : " + isPalindrome);
+    static boolean palindromeStack(String word) {
 
-        scanner.close();
+        Stack<Character> stack = new Stack<>();
+
+        for (int i = 0; i < word.length(); i++) {
+            stack.push(word.charAt(i));
+        }
+
+        for (int i = 0; i < word.length(); i++) {
+            if (word.charAt(i) != stack.pop()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+
+        double version = 2.0;
+        System.out.println("Welcome to the Palindrome Checker Management System");
+        System.out.println("Version : " + version);
+        System.out.println("System initialized successfully.");
+
+        String testWord = "madam";
+
+        System.out.println("\nTesting word: " + testWord);
+
+        System.out.println("Reverse Method: " + palindrome(testWord));
+        System.out.println("Two Pointer Method: " + palindromeArr(testWord));
+        System.out.println("Stack Method: " + palindromeStack(testWord));
     }
 }
